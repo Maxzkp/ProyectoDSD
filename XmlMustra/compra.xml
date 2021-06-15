@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+    Actions
+    register    <all>
+    cancel      <numcompra>    
+-->
+
+<compra action="">
+    <numcompra></numcompra>
+    <fecha></fecha>
+    <hora></hora>
+    <usuario>
+        <id></id>
+    </usuario>
+    <juegos>
+        <!-- Multiple -->
+        <id></id>
+    </juegos>
+</compra>

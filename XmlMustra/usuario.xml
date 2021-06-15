@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    Action          <params needed>
+
+    getall          <empty>
+    getby           <optional: id, username, email>
+    register        <username, email, passwd, passwd.confirm>
+    change_passwd   <passwd, passwd.new, passwd.confirm>
+    login           <username, passwd>
+    delete          <id>
+-->
+
+<usuario action="register">
+    <id></id>
+    <username></username>
+    <email></email>
+    <passwd confirm="" new=""></passwd>
+</usuario>

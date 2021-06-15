@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+    Action          <params needed>
+
+    register        <all except: id>
+    getby           <optional: id, desarrollador, distribuidor, precio.min, precio.max>
+    update          <all>
+    delete          <id>
+-->
+
+<juego action="">
+    <id></id>
+    <nombre></nombre>
+    <desarrollador></desarrollador>
+    <distribuidor></distribuidor>
+    <fechalanzamiento></fechalanzamiento>
+    <etiquetas>
+        <!-- Multiple -->
+        <etiqueta></etiqueta>
+    </etiquetas>
+    <descripcion></descripcion>
+    <precio min="" max=""></precio>
+</juego>
