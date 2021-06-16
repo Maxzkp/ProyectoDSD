@@ -7,7 +7,7 @@
 -->
 
 <compra action="">
-    <numcompra></numcompra>
+    <id></id>
     <fecha></fecha>
     <hora></hora>
     <usuario>

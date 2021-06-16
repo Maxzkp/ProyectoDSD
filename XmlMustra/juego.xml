@@ -4,17 +4,20 @@
     Action          <params needed>
 
     register        <all except: id>
-    getby           <optional: id, nombre, desarrollador, distribuidor, precio.min, precio.max>
+    getall          <empty>
+    getby           <optional: id, titulo, desarrollador, distribuidor, precio.min, precio.max>
     update          <all>
     delete          <id>
 -->
-
-<juego action="">
-    <id></id>
-    <nombre></nombre>
-    <desarrollador></desarrollador>
-    <distribuidor></distribuidor>
-    <fechalanzamiento></fechalanzamiento>
-    <descripcion></descripcion>
-    <precio min="" max=""></precio>
-</juego>
+<juegos>
+    <!-- Multiple -->
+    <juego action="">
+        <id></id>
+        <titulo></titulo>
+        <desarrollador></desarrollador>
+        <distribuidor></distribuidor>
+        <fechalanzamiento></fechalanzamiento>
+        <descripcion></descripcion>
+        <precio min="" max=""></precio>
+    </juego>
+</juegos>
