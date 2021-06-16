@@ -15,10 +15,6 @@
     <desarrollador></desarrollador>
     <distribuidor></distribuidor>
     <fechalanzamiento></fechalanzamiento>
-    <etiquetas>
-        <!-- Multiple -->
-        <etiqueta></etiqueta>
-    </etiquetas>
     <descripcion></descripcion>
     <precio min="" max=""></precio>
 </juego>
