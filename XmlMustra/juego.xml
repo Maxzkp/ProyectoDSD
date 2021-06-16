@@ -4,7 +4,7 @@
     Action          <params needed>
 
     register        <all except: id>
-    getby           <optional: id, desarrollador, distribuidor, precio.min, precio.max>
+    getby           <optional: id, nombre, desarrollador, distribuidor, precio.min, precio.max>
     update          <all>
     delete          <id>
 -->
