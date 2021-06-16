@@ -1,4 +1,5 @@
 from flask import Flask, request
+import flask
 import xmltodict
 from ORM.models import DB_Admin, Juego
 
@@ -26,14 +27,18 @@ def juegos():
         for juego in juegos:
             xml_response += juego.to_xml()
         xml_response += '</juegos>'
-        return xml_response
+        resp = flask.Response(xml_response, content_type='application/xml')
+        resp.headers['Access-Control-Allow-Origin'] = '*'
+        return resp
     if action == 'getby':
         juegos = Juego.get_by(xml_info['juego']['id'], xml_info['juego']['titulo'])
         xml_response = '<?xml version="1.0" encoding="UTF-8"?><juegos>'
         for juego in juegos:
             xml_response += juego.to_xml()
         xml_response += '</juegos>'
-        return xml_response
+        resp = flask.Response(xml_response, content_type='application/xml')
+        resp.headers['Access-Control-Allow-Origin'] = '*'
+        return resp
     else:
         return xml_info
     
