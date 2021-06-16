@@ -13,8 +13,7 @@
     <usuario>
         <id></id>
     </usuario>
-    <juegos>
-        <!-- Multiple -->
+    <juego>
         <id></id>
-    </juegos>
+    </juego>
 </compra>
