@@ -37,7 +37,7 @@ def juegos():
             xml_response += juego.to_xml()
         xml_response += '</juegos>'
         resp = flask.Response(xml_response, content_type='application/xml')
-        resp.headers['Access-Control-Allow-Origin'] = '*'
+        #resp.headers['Access-Control-Allow-Origin'] = '*'
         return resp
     else:
         return xml_info
