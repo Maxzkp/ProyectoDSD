@@ -8,11 +8,14 @@
     change_passwd   <passwd, passwd.new, passwd.confirm>
     login           <username, passwd>
     delete          <id>
+    credit_up       <id, credito>
+    credit_down     <id, credito>
 -->
 
-<usuario action="register">
+<usuario action="">
     <id></id>
     <username></username>
     <email></email>
     <passwd confirm="" new=""></passwd>
+    <credito></credito>
 </usuario>
