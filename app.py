@@ -2,8 +2,10 @@ from flask import Flask, request
 import flask
 import xmltodict
 from ORM.models import DB_Admin, Juego
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/')
 def main():
@@ -38,10 +40,11 @@ def juegos():
         xml_response += '</juegos>'
         resp = flask.Response(xml_response, content_type='application/xml')
         #resp.headers['Access-Control-Allow-Origin'] = '*'
+        resp.access_control_allow_origin = '*'
         return resp
     else:
         return xml_info
     
 if __name__ == '__main__':
     DB_Admin.start_db()
-    app.run(debug=True)
+    app.run(debug=True, port=4000)
