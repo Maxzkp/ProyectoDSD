@@ -16,7 +16,7 @@ def main():
     juegos = Juego.get_all()
     return str([str(juego) for juego in juegos])
 
-@app.route('/juegos',methods = ['GET']) #Sirve para mostrar todo el catalogo
+@app.route('/juegos',methods = ['POST']) #Sirve para mostrar todo el catalogo
 def mostrar_catalogo():
     juegos = Juego.get_all()
     xml_response = '<?xml version="1.0" encoding="UTF-8"?><juegos>'
@@ -27,7 +27,7 @@ def mostrar_catalogo():
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
     
-@app.route('/juegos/filtros', methods = ['GET'])# Sirve para aplicar los filtros de la primera pagina
+@app.route('/juegos/filtros', methods = ['POST'])# Sirve para aplicar los filtros de la primera pagina
 def juegos_filtros():
     request.get_data()
     print(request.data)
@@ -64,7 +64,7 @@ def juegos_filtros():
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
 
-@app.route('/juegos/compra',methods = ['GET']) # Regresa la información de un juego 
+@app.route('/juegos/compra',methods = ['POST']) # Regresa la información de un juego 
 def info_juego():
     xml_info = xmltodict.parse(request.data)
     if xml_info["juego"]["id"] != None:
@@ -87,7 +87,7 @@ def info_juego():
         resp.headers.extend(headers or {})
         return resp
         
-@app.route('/juego/compras/transaccion',methods = ['PUT'])
+@app.route('/juego/compras/transaccion',methods = ['POST'])
 def transaccion():
     id = 4
     idjuego = 1
