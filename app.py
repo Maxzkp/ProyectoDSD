@@ -16,7 +16,7 @@ def main():
     gamenum = randint(1,10000)
     devnum = randint(1,10000)
     disnum = randint(1,10000)
-    juego = Juego((None, 'Juego {gamenum}', 'dev {devnum}', 'dis {disnum}', 'DD MMM AAAA', 'qdboauysdbuwdq', randint(1000,10000)))
+    juego = Juego((None, f'Juego {gamenum}', f'dev {devnum}', f'dis {disnum}', 'DD MMM AAAA', 'qdboauysdbuwdq', randint(1000,10000)))
     juego.save()
     juegos = Juego.get_all()
     return str([str(juego) for juego in juegos])
