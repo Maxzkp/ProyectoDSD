@@ -29,6 +29,7 @@ def mostrar_catalogo():
     
 @app.route('/juegos/filtros', methods = ['GET'])# Sirve para aplicar los filtros de la primera pagina
 def juegos_filtros():
+    print(request.data)
     xml_info = xmltodict.parse(request.data)
     #print(xml_info)
     query =''
