@@ -54,10 +54,10 @@ def juegos_filtros():
     juegos = [Juego(dat) for dat in dats]
     con.close()
     #print(dats)
-    xml_response = '<?xml version="1.0" encoding="UTF-8"?><juegosFiltros>'
+    xml_response = '<?xml version="1.0" encoding="UTF-8"?><juegos>'
     for juego in juegos:
         xml_response += juego.to_xml()
-    xml_response += '</juegosFiltros>'
+    xml_response += '</juegos>'
     resp = flask.Response(xml_response, content_type='application/xml')
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
