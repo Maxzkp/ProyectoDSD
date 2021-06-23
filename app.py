@@ -32,20 +32,20 @@ def juegos_filtros():
     xml_info = xmltodict.parse(request.data)
     #print(xml_info)
     query =''
-    if xml_info["juegos"]["juego"]["titulo"] != None:
-        query += f' WHERE titulo LIKE "%{xml_info["juegos"]["juego"]["titulo"]}%"'
-    if xml_info["juegos"]["juego"]["desarrollador"] != None:
+    if xml_info["juego"]["titulo"] != None:
+        query += f' WHERE titulo LIKE "%{xml_info["juego"]["titulo"]}%"'
+    if xml_info["juego"]["desarrollador"] != None:
         if query != '':
             query += " AND"
         else:
             query += ' WHERE'
-        query += f' desarrollador = "{xml_info["juegos"]["juego"]["desarrollador"]}"'
-    if xml_info["juegos"]["juego"]["distribuidor"] != None:
+        query += f' desarrollador = "{xml_info["juego"]["desarrollador"]}"'
+    if xml_info["juego"]["distribuidor"] != None:
         if query != '':
             query += " AND"
         else:
             query += " WHERE"
-        query += f' distribuidor = "{xml_info["juegos"]["juego"]["distribuidor"]}"'
+        query += f' distribuidor = "{xml_info["juego"]["distribuidor"]}"'
     
     con = connect(DB_Admin.DB_NAME)
     cur = con.cursor()
@@ -65,10 +65,10 @@ def juegos_filtros():
 @app.route('/juegos/compra',methods = ['GET']) # Regresa la información de un juego 
 def info_juego():
     xml_info = xmltodict.parse(request.data)
-    if xml_info["juegos"]["juego"]["id"] != None:
+    if xml_info["juego"]["id"] != None:
         con = connect(DB_Admin.DB_NAME)
         cur = con.cursor()
-        cur.execute(f'SELECT * FROM juegos WHERE id = "{xml_info["juegos"]["juego"]["id"]}"')
+        cur.execute(f'SELECT * FROM juegos WHERE id = "{xml_info["juego"]["id"]}"')
         dats = cur.fetchall()
         juegos = [Juego(dat) for dat in dats]
         con.close()
