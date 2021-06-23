@@ -12,7 +12,7 @@ CORS(app)
 
 @app.route('/')
 def main():
-    Juego.clear_all()
+    #Juego.clear_all()
     gamenum = randint(1,10000)
     devnum = randint(1,10000)
     disnum = randint(1,10000)
