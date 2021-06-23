@@ -23,6 +23,7 @@ def main():
 @app.route('/clear')
 def clear():
     Juego.clear_all()
+    return 'done'
 
 @app.route('/juegos',methods = ['POST']) #Sirve para mostrar todo el catalogo
 def mostrar_catalogo():
