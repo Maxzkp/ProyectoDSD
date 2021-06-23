@@ -4,14 +4,19 @@ import xmltodict
 from ORM.models import DB_Admin, Juego
 from flask_cors import CORS
 from sqlite3 import connect
+#Temporal
+from random import randint
 
 app = Flask(__name__)
 CORS(app)
 
 @app.route('/')
 def main():
-    #Juego.clear_all()
-    juego = Juego((None, 'Juego 1', 'dev', 'dis', 'DD MMM AAAA', 'qdboauysdbuwdq', 1000))
+    Juego.clear_all()
+    gamenum = randint(1,10000)
+    devnum = randint(1,10000)
+    disnum = randint(1,10000)
+    juego = Juego((None, 'Juego {gamenum}', 'dev {devnum}', 'dis {disnum}', 'DD MMM AAAA', 'qdboauysdbuwdq', randint(1000,10000)))
     juego.save()
     juegos = Juego.get_all()
     return str([str(juego) for juego in juegos])
