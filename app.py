@@ -39,13 +39,13 @@ def juegos_filtros():
             query += " AND"
         else:
             query += ' WHERE'
-        query += f' desarrollador = "%{xml_info["juego"]["desarrollador"]}%"'
+        query += f' desarrollador LIKE "%{xml_info["juego"]["desarrollador"]}%"'
     if xml_info["juego"]["distribuidor"] != None:
         if query != '':
             query += " AND"
         else:
             query += " WHERE"
-        query += f' distribuidor = "%{xml_info["juego"]["distribuidor"]}%"'
+        query += f' distribuidor LIKE "%{xml_info["juego"]["distribuidor"]}%"'
     
     con = connect(DB_Admin.DB_NAME)
     cur = con.cursor()
