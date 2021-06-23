@@ -12,7 +12,6 @@ CORS(app)
 
 @app.route('/')
 def main():
-    #Juego.clear_all()
     gamenum = randint(1,10000)
     devnum = randint(1,10000)
     disnum = randint(1,10000)
@@ -20,6 +19,10 @@ def main():
     juego.save()
     juegos = Juego.get_all()
     return str([str(juego) for juego in juegos])
+
+@app.route('/clear')
+def clear():
+    Juego.clear_all()
 
 @app.route('/juegos',methods = ['POST']) #Sirve para mostrar todo el catalogo
 def mostrar_catalogo():
