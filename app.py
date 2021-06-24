@@ -98,23 +98,44 @@ def info_juego():
         
 @app.route('/juego/compras/transaccion',methods = ['POST'])
 def transaccion():
-    id = 4
-    idjuego = 1
-    con = connect(DB_Admin.DB_NAME)
-    cur = con.cursor()
-    cur.execute(f'SELECT credito FROM usuarios WHERE id = {id}')
-    creditoUsuario = cur.fetchall()
-    cur.execute(f'SELECT precio FROM juego WHERE id = {idjuego}')
-    precioJuego = cur.fetchall()
-    nuevoCredito = creditoUsuario - precioJuego
-    if nuevoCredito >= 0:
-        cur.execute(f'UPDATE usuarios SET credito = {nuevoCredito} WHERE id = {id}')
+    xml_info = xmltodict.parse(request.data)
+    if xml_info["compra"]["usuario"]["id"] != None:
+        if ["compra"]["juego"]["id"] != None:
+            con = connect(DB_Admin.DB_NAME)
+            cur = con.cursor()
+            cur.execute(f'SELECT credito FROM usuarios WHERE id = {id}')
+            creditoUsuario = cur.fetchall()
+            cur.execute(f'SELECT precio FROM juego WHERE id = {idjuego}')
+            precioJuego = cur.fetchall()
+            nuevoCredito = creditoUsuario - precioJuego
+            if nuevoCredito >= 0:
+                cur.execute(f'UPDATE usuarios SET credito = {nuevoCredito} WHERE id = {id}')
+                con.close()
+                resp = make_response(dumps({},200))
+                return resp
+            else:
+                con.close()
+                xml_response = '<?xml version="1.0" encoding="UTF-8"?><errorCredito>'
+                xml_response = f'<error>El usuario no tiene el suficiente credito</error>'
+                xml_response += '</errorCredito>'
+                resp = flask.Response(xml_response, content_type='application/xml')
+                resp.headers['Access-Control-Allow-Origin'] = '*'
+                return resp
+        else:
+            con.close()
+            xml_response = '<?xml version="1.0" encoding="UTF-8"?><errorCredito>'
+            xml_response = f'<error>No se encuentra el juego deseado</error>'
+            xml_response += '</errorCredito>'
+            resp = flask.Response(xml_response, content_type='application/xml')
+            resp.headers['Access-Control-Allow-Origin'] = '*'
+            return resp
+        else:
         con.close()
-        resp = make_response(dumps({},200))
-        return resp
-    else:
-        con.close()
-        resp = make_response(dumps({"mensaje" : "No tienes credito suficiente"},404))
+        xml_response = '<?xml version="1.0" encoding="UTF-8"?><errorCredito>'
+        xml_response = f'<error>No se encuentra el usuario</error>'
+        xml_response += '</errorCredito>'
+        resp = flask.Response(xml_response, content_type='application/xml')
+        resp.headers['Access-Control-Allow-Origin'] = '*'
         return resp
     
 @app.route('/juegos/registros', methods = ['POST'])
