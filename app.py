@@ -141,8 +141,8 @@ def transaccion():
 @app.route('/juegos/registros', methods = ['POST'])
 def nuevo_juego():
     xml_info = xmltodict.parse(request.data)
-    if xml["juegos"]["juego"]["id"] != None:
-        juego = Juego((None, xml["juegos"]["juego"]["id"], xml["juegos"]["juego"]["desarrollador"], xml["juegos"]["juego"]["distribuidor"], xml["juegos"]["juego"]["fechalanzamiento"], xml["juegos"]["juego"]["descripcion"], xml["juegos"]["juego"]["precio"]))
+    if xml_info["juego"]["id"] != None:
+        juego = Juego((None, xml_info["juego"]["id"], xml_info["juego"]["desarrollador"], xml_info["juego"]["distribuidor"], xml_info["juego"]["fechalanzamiento"], xml_info["juego"]["descripcion"], xml_info["juego"]["precio"]))
         juego.save()
         juegos = Juego.get_all()
         return str([str(juego) for juego in juegos])
