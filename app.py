@@ -146,6 +146,7 @@ def nuevo_juego():
         juego.save()
         juegos = Juego.get_all()
         return str([str(juego) for juego in juegos])
+    return 'done'
 
 if __name__ == '__main__':
     DB_Admin.start_db()
