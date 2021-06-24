@@ -117,6 +117,14 @@ def transaccion():
         resp = make_response(dumps({"mensaje" : "No tienes credito suficiente"},404))
         return resp
     
+@app.route('/juegos/registros', methods = ['POST'])
+def nuevo_juego():
+    xml_info = xmltodict.parse(request.data)
+    if xml["juegos"]["juego"]["id"] != None:
+        juego = Juego((None, xml["juegos"]["juego"]["id"], xml["juegos"]["juego"]["desarrollador"], xml["juegos"]["juego"]["distribuidor"], xml["juegos"]["juego"]["fechalanzamiento"], xml["juegos"]["juego"]["descripcion"], xml["juegos"]["juego"]["precio"]))
+        juego.save()
+        juegos = Juego.get_all()
+        return str([str(juego) for juego in juegos])
 
 if __name__ == '__main__':
     DB_Admin.start_db()
