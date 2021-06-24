@@ -129,7 +129,7 @@ def transaccion():
             resp = flask.Response(xml_response, content_type='application/xml')
             resp.headers['Access-Control-Allow-Origin'] = '*'
             return resp
-        else:
+    else:
         con.close()
         xml_response = '<?xml version="1.0" encoding="UTF-8"?><errorCredito>'
         xml_response = f'<error>No se encuentra el usuario</error>'
