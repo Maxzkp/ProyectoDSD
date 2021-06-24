@@ -62,7 +62,7 @@ def juegos_filtros():
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
 
-@app.route('/juegos/compra',methods = ['GET']) # Regresa la información de un juego 
+@app.route('/juegos/visualizarCompra',methods = ['GET']) # Regresa la información de un juego 
 def info_juego():
     xml_info = xmltodict.parse(request.data)
     if xml_info["juegos"]["juego"]["id"] != None:
@@ -81,31 +81,65 @@ def info_juego():
         resp.headers['Access-Control-Allow-Origin'] = '*'
         return resp
     else:
-        resp = make_response(dumps({'response' : 'Error'},404))
-        resp.headers.extend(headers or {})
+        xml_response = '<?xml version="1.0" encoding="UTF-8"?><errorJuegos>'
+        xml_response = f'<error>No se envio id de juego</error>'
+        xml_response += '</errorJuegos>'
+        resp = flask.Response(xml_response, content_type='application/xml')
+        resp.headers['Access-Control-Allow-Origin'] = '*'
         return resp
         
-@app.route('/juego/compras/transaccion',methods = ['PUT'])
-def transaccion():
-    id = 4
-    idjuego = 1
-    con = connect(DB_Admin.DB_NAME)
-    cur = con.cursor()
-    cur.execute(f'SELECT credito FROM usuarios WHERE id = {id}')
-    creditoUsuario = cur.fetchall()
-    cur.execute(f'SELECT precio FROM juego WHERE id = {idjuego}')
-    precioJuego = cur.fetchall()
-    nuevoCredito = creditoUsuario - precioJuego
-    if nuevoCredito >= 0:
-        cur.execute(f'UPDATE usuarios SET credito = {nuevoCredito} WHERE id = {id}')
+@app.route('/juego/compras/actualizarCredito',methods = ['PUT']) #resta el precio al credito
+def actualizar_credito():
+    xml_info = xmltodict.parse(request.data)
+    if xml_info["compra"]["usuario"]["id"] != None:
+        if ["compra"]["juego"]["id"] != None:
+            con = connect(DB_Admin.DB_NAME)
+            cur = con.cursor()
+            cur.execute(f'SELECT credito FROM usuarios WHERE id = {id}')
+            creditoUsuario = cur.fetchall()
+            cur.execute(f'SELECT precio FROM juego WHERE id = {idjuego}')
+            precioJuego = cur.fetchall()
+            nuevoCredito = creditoUsuario - precioJuego
+            if nuevoCredito >= 0:
+                cur.execute(f'UPDATE usuarios SET credito = {nuevoCredito} WHERE id = {id}')
+                con.close()
+                resp = make_response(dumps({},200))
+                return resp
+            else:
+                con.close()
+                xml_response = '<?xml version="1.0" encoding="UTF-8"?><errorCredito>'
+                xml_response = f'<error>El usuario no tiene el suficiente credito</error>'
+                xml_response += '</errorCredito>'
+                resp = flask.Response(xml_response, content_type='application/xml')
+                resp.headers['Access-Control-Allow-Origin'] = '*'
+                return resp
+        else:
+            con.close()
+            xml_response = '<?xml version="1.0" encoding="UTF-8"?><errorCredito>'
+            xml_response = f'<error>No se encuentra el juego deseado</error>'
+            xml_response += '</errorCredito>'
+            resp = flask.Response(xml_response, content_type='application/xml')
+            resp.headers['Access-Control-Allow-Origin'] = '*'
+            return resp
+        else:
         con.close()
-        resp = make_response(dumps({},200))
+        xml_response = '<?xml version="1.0" encoding="UTF-8"?><errorCredito>'
+        xml_response = f'<error>No se encuentra el usuario</error>'
+        xml_response += '</errorCredito>'
+        resp = flask.Response(xml_response, content_type='application/xml')
+        resp.headers['Access-Control-Allow-Origin'] = '*'
         return resp
-    else:
-        con.close()
-        resp = make_response(dumps({"mensaje" : "No tienes credito suficiente"},404))
-        return resp
+
+@app.route('/juegos/registros', methods = ['POST'])
+def nuevo_juego():
+    xml_info = xmltodict.parse(request.data)
+    if xml["juegos"]["juego"]["id"] != None:
+        juego = Juego((None, xml["juegos"]["juego"]["id"], xml["juegos"]["juego"]["desarrollador"], xml["juegos"]["juego"]["distribuidor"], xml["juegos"]["juego"]["fechalanzamiento"], xml["juegos"]["juego"]["descripcion"], xml["juegos"]["juego"]["precio"]))
+        juego.save()
+        juegos = Juego.get_all()
+        return str([str(juego) for juego in juegos])
     
+
 
 if __name__ == '__main__':
     DB_Admin.start_db()
